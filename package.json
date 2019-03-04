@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "package": "pkg ."
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.6.0",
@@ -65,8 +66,8 @@
   "pkg": {
     "assets": [
       "dist/**/*",
-      "db.sqlite",
-      "migrations/*"
+      "src/api/db/migrations/*",
+      "src/api/db/db.sqlite"
     ]
   }
 }

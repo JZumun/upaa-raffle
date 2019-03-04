@@ -1,14 +1,16 @@
 const sqlite = require("sqlite");
 const sql = require("sql-template-strings");
 const debug = require("debug");
+const path = require("path");
 
 const log = debug("application:database");
 
 const initializeDatabase = sqlite
-  .open("./db.sqlite")
+  .open(path.join(__dirname,"./db.sqlite"))
   .then(db =>
     db.migrate({
-      force: process.env.NODE_ENV === "development" ? "last" : undefined
+      force: process.env.NODE_ENV === "development" ? "last" : undefined,
+      migrationsPath: path.join(__dirname, "migrations")
     })
   )
   .then(db => db.exec(`PRAGMA foreign_keys = ON`));
