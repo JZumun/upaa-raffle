@@ -6,14 +6,18 @@ const path = require("path");
 const log = debug("application:database");
 
 const initializeDatabase = sqlite
-  .open(path.join(__dirname,"./db.sqlite"))
+  .open(path.join(process.cwd(), "upaa-raffle.db"))
   .then(db =>
     db.migrate({
       force: process.env.NODE_ENV === "development" ? "last" : undefined,
       migrationsPath: path.join(__dirname, "migrations")
     })
   )
-  .then(db => db.exec(`PRAGMA foreign_keys = ON`));
+  .then(db => db.exec(`PRAGMA foreign_keys = ON`))
+  .catch(err => {
+    console.log(err);
+    process.exit(-1);
+  });
 
 const getQueryString = () => sql`
   SELECT p.id as id, 

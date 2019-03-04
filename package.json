@@ -1,5 +1,5 @@
 {
-  "name": "upaa-raffle-2",
+  "name": "upaa-raffle",
   "version": "0.1.0",
   "private": true,
   "bin": "index.js",
@@ -7,7 +7,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "package": "pkg ."
+    "package": "./package",
+    "start": "./run"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.6.0",
@@ -66,8 +67,7 @@
   "pkg": {
     "assets": [
       "dist/**/*",
-      "src/api/db/migrations/*",
-      "src/api/db/db.sqlite"
+      "src/api/db/migrations/*"
     ]
   }
 }
