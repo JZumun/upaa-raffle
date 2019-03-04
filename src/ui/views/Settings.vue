@@ -11,10 +11,10 @@
         li #[a(href="#manage") Manage Options]
       ul.menu-list
         li 
-          a.level-item.home(href="/") 
+          router-link.level-item.home(to="/") 
             b-icon.is-small(icon="arrow-left")
             span Return to Raffle Page
-  .column.is-three-quarters
+  .column.is-three-quarters.settings-container
     h2#list Entries List
     b-table(:data="entries", :striped="true", :narrowed="true")
       template(slot-scope="{row}")
@@ -70,7 +70,7 @@ const alertError = message =>
     queue: false
   });
 
-const process = (axiosCall, errMessage = "An error occured") =>
+const process = axiosCall =>
   axiosCall
     .then(res => res.data)
     .then(response => {
@@ -195,6 +195,10 @@ export default {
 </script>
 
 <style lang="scss">
+.settings-container {
+  background-color: white;
+  padding: 2em;
+}
 h1 {
   font-weight: bold;
 }

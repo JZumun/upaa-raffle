@@ -5,13 +5,13 @@
       div.winner-container(v-if="winner")
         p.congratulations Congratulations!
         p.winner {{winner}}
-      div(v-else)
+      div.winner-container(v-else)
         p.congratulations UPAA Camarines Sur Chapter
         p.winner E-Raffle Contest
       .controls 
-        button.button( @click.prevent="raffle" ) Select Next Winner
+        button.button.is-primary( @click.prevent="raffle" ) Select Next Winner
         p.count {{count}} entries remaining.
-      a.settings-button(href="/settings")
+      router-link.settings-button(to="/settings")
         b-icon(icon="settings")
 </template>
 
@@ -72,6 +72,7 @@ p {
   margin: 1em auto;
   width: 8em;
   height: auto;
+  margin-bottom: auto;
 }
 
 .title {
@@ -80,6 +81,7 @@ p {
 
 .winner-container {
   margin-bottom: auto;
+  will-change: transform, filter, opacity;
 }
 
 .controls {
