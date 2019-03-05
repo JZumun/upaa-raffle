@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./db");
+const { read } = require("./utils/csv");
 const multer = require("multer");
-const parse = require("csv-parse/lib/sync");
 const debug = require("debug");
 
 const app = express();
@@ -45,18 +45,8 @@ app.post(
   "/upload",
   upload.single("file"),
   handler(req => {
-    const data = parse(req.file.buffer.toString(), {
-      columns: true,
-      skip_empty_lines: true
-    });
-    return db.insertMany(
-      data.map(datum => ({
-        name: `${datum["FIRST NAME"]} ${datum["MIDDLE NAME"]} ${
-          datum["LAST NAME"]
-        }`,
-        id: datum["STUDENT NUMBER"]
-      }))
-    );
+    const data = read(req.file.buffer);
+    return db.insertMany(data);
   })
 );
 

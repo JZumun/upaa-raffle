@@ -1,6 +1,6 @@
 -- Up
 CREATE TABLE person (
-  id TEXT PRIMARY KEY, 
+  id TEXT PRIMARY KEY NOT NULL, 
   name TEXT NOT NULL
 );
 CREATE TABLE winner (
