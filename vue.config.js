@@ -2,10 +2,11 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 const UI_DIR = path.join(__dirname, "./src/ui");
-const UI_DIST = path.join(__dirname, "./dist");
+const UI_DIST = path.join(__dirname, "./src/ui/dist");
 
 module.exports = {
-  baseUrl: "/",
+  publicPath: "/",
+  outputDir: UI_DIST,
   configureWebpack: {
     resolve: {
       alias: {

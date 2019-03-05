@@ -1,5 +1,5 @@
 const express = require("express");
-const api = require("./src/api");
+const api = require("./api");
 const debug = require("debug");
 const history = require("connect-history-api-fallback");
 const open = require("opn");
@@ -10,9 +10,9 @@ const log = debug("application:api");
 const app = express();
 
 app.use("/api", api);
-app.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/", express.static(path.join(__dirname, "ui/dist")));
 app.use("/", history());
-app.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/", express.static(path.join(__dirname, "ui/dist")));
 
 const server = http.createServer(app);
 
