@@ -1,12 +1,40 @@
 #!/usr/bin/env bash
-mkdir -p build/win32
-mkdir -p build/macos
-npx pkg . --out-path build/win32 --targets win
-npx pkg . --out-path build/macos --targets macos
+function build_window_batch_file () {
+    BUILD_PATH=$1
+    RUN_FILE=$BUILD_PATH/RUN.bat
+    touch $RUN_FILE
+    echo "cd %~dp0\bin" > $RUN_FILE
+    echo "start \"%~dp0\bin\upaa-raffle.exe\"" >> $RUN_FILE
+    chmod +x $RUN_FILE
+}
 
-
+#WIN32
+mkdir -p build/win32/bin
+npx pkg . --out-path build/win32/bin --targets win-x86
 if [ ! -f node_modules/sqlite3/lib/binding/node-v57-win32-ia32/node_sqlite3.node ]; then
     npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=win32 --target_arch=ia32
 fi
-cp node_modules/sqlite3/lib/binding/node-v57-win32-ia32/node_sqlite3.node build/win32
-cp node_modules/sqlite3/lib/binding/node-v57-darwin-x64/node_sqlite3.node build/macos/
+cp node_modules/sqlite3/lib/binding/node-v57-win32-ia32/node_sqlite3.node build/win32/bin
+build_window_batch_file build/win32
+
+#WIN64
+mkdir -p build/win64/bin
+npx pkg . --out-path build/win64/bin --targets win-x64
+if [ ! -f node_modules/sqlite3/lib/binding/node-v57-win32-x64/node_sqlite3.node ]; then
+    npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=win32 --target_arch=x64
+fi
+cp node_modules/sqlite3/lib/binding/node-v57-win32-x64/node_sqlite3.node build/win64/bin
+build_window_batch_file build/win64
+
+#OSX
+mkdir -p build/macos/bin
+npx pkg . --out-path build/macos/bin --targets macos
+if [ ! -f node_modules/sqlite3/lib/binding/node-v57-darwin-x64/node_sqlite3.node ]; then
+    npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=darwin --target_arch=x64
+fi
+cp node_modules/sqlite3/lib/binding/node-v57-darwin-x64/node_sqlite3.node build/macos/bin
+touch build/macos/run
+echo "#!/usr/bin/env bash" > build/macos/run
+echo 'cd "$(dirname "$0")"/bin' >> build/macos/run
+echo "./upaa-raffle" >> build/macos/run
+chmod +x build/macos/run
