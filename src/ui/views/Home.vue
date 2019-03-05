@@ -1,102 +1,48 @@
 <template lang="pug">
-  div
-    .winner-section
-      img.logo(src="@ui/assets/logo.png")
-      div.winner-container(v-if="winner")
-        p.congratulations Congratulations!
-        p.winner {{winner}}
-      div.winner-container(v-else)
-        p.congratulations UPAA Camarines Sur Chapter
-        p.winner E-Raffle Contest
-      .controls 
-        button.button.is-primary( @click.prevent="raffle" ) Select Next Winner
-        p.count {{count}} entries remaining.
-      router-link.settings-button(to="/settings")
-        b-icon(icon="settings")
+  .raffle-container
+    raffle-logo
+    div.winner-container
+      p UPAA Camarines Sur Chapter
+      p.title E-Raffle Contest
+    .controls 
+      router-link.button.is-primary.is-large( to="/raffle" ) START
+    settings-gear
 </template>
 
-<script lang="js">
-import axios from "axios";
+<script>
+import RaffleLogo from "../components/Logo.vue";
+import SettingsGear from "../components/Gear.vue";
 export default {
-  async mounted() {
-    const {success, result} =( await axios.get("/api/count")).data;
-    if (success) {
-      this.count = result;
-    }
-  },
-  data() {
-    return {
-      winner: undefined,
-      count: "??"
-    };
-  },
-  methods: {
-    async raffle() {
-      const { success, result } = (await axios.post("/api/raffle")).data;
-      if (success) {
-        this.winner = result.name;
-        this.count -= 1
-      } else {
-        this.$snackbar.open("An error occured")
-      }
-    }
-  }
+  components: { RaffleLogo, SettingsGear }
 };
 </script>
 
 <style lang="scss" scoped>
 p {
   line-height: 1;
+  font-size: 3em;
 }
 
-.winner-section {
+.raffle-container {
   text-align: center;
   padding: 2em;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  justify-content: space-between;
   min-height: 100vh;
-}
-
-.congratulations {
-  font-size: 3em;
-}
-
-.winner {
-  font-size: 5em;
-  font-weight: bold;
-}
-
-.logo {
-  display: block;
-  margin: 1em auto;
-  width: 8em;
-  height: auto;
-  margin-bottom: auto;
 }
 
 .title {
   font-size: 5em;
-}
-
-.winner-container {
-  margin-bottom: auto;
-  will-change: transform, filter, opacity;
+  font-weight: bold;
 }
 
 .controls {
-  margin-top: auto;
   padding: 2em;
+  letter-spacing: 0.1ch;
 }
 
 .count {
   margin-top: 1em;
-}
-
-.settings-button {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  color: inherit;
 }
 </style>

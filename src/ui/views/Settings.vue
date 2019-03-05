@@ -18,7 +18,7 @@
     h2#list Entries List
     b-table(:data="entries", :striped="true", :narrowed="true")
       template(slot-scope="{row}")
-        b-table-column(field="id", label="Student Number") {{ row.id }}
+        b-table-column(field="id", label="Student Number") #[span.sn {{ row.id }}]
         b-table-column(field="name", label="Name") {{ row.name }}
         b-table-column(field="winner", label="Winner") {{ row.winner ? "Yes" : "No" }}
         b-table-column(label="Options", width="100", :numeric="true")
@@ -62,6 +62,9 @@
 <script>
 import axios from "axios";
 import { Snackbar } from "buefy/dist/components/snackbar";
+import { Field } from "buefy/dist/components/field";
+import { Input } from "buefy/dist/components/input";
+import { Upload } from "buefy/dist/components/upload";
 
 const alertError = message =>
   Snackbar.open({
@@ -80,6 +83,11 @@ const process = axiosCall =>
     });
 
 export default {
+  components: {
+    "b-field": Field,
+    "b-input": Input,
+    "b-upload": Upload
+  },
   mounted() {
     this.updateEntries();
   },
@@ -240,5 +248,9 @@ h2 {
   grid-template-columns: auto 1fr;
   align-items: baseline;
   grid-gap: 2em;
+}
+
+.sn {
+  font-family: monospace;
 }
 </style>

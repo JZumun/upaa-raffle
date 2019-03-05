@@ -5,6 +5,8 @@
 
 <style lang="scss">
 body {
+  height: 100vh;
+  width: 100vw;
   background: url("./assets/background-2.png");
   background-size: cover;
   background-position: top;
