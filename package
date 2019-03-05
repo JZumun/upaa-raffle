@@ -4,7 +4,7 @@ function build_window_batch_file () {
     RUN_FILE=$BUILD_PATH/RUN.bat
     touch $RUN_FILE
     echo "cd %~dp0\bin" > $RUN_FILE
-    echo "start \"%~dp0\bin\upaa-raffle.exe\"" >> $RUN_FILE
+    echo '%~dp0\bin\upaa-raffle.exe' >> $RUN_FILE
     chmod +x $RUN_FILE
 }
 
