@@ -4,17 +4,21 @@ const debug = require("debug");
 const history = require("connect-history-api-fallback");
 const open = require("opn");
 const path = require("path");
+const http = require('http');
 
 const log = debug("application:api");
-const server = express();
+const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 0;
 
-server.use("/api", api);
-server.use("/", express.static(path.join(__dirname, "dist")));
-server.use("/", history());
-server.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/api", api);
+app.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/", history());
+app.use("/", express.static(path.join(__dirname, "dist")));
+
+const server = http.createServer(app);
 server.listen(PORT, () => {
-  log(`listening on port ${PORT}`);
-  open(`http://localhost:${PORT}`);
+  const port = server.address().port
+  log(`listening on port ${port}`);
+  open(`http://localhost:${port}`);
 });
