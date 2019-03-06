@@ -50,18 +50,15 @@ export default {
       this.show.winner = false;
       try {
         const { success, result } = (await axios.post("/api/raffle")).data;
+        // const { success, result } = await Promise.resolve({ success: true, result: { id: "1234-56789", name: "Barbaros" } })
         if (success) {
           this.winner = result;
           this.count -= 1
         } else {
-          this.error = true;
-          this.$snackbar.open("Unable to find a winner")
-          this.show.button = true;
+          this.logError("Unable to find a winner");
         }
       } catch (err) {
-        this.error = true;
-        this.$snackbar.open("An error occured")
-        this.show.button = true;
+        this.logError("An error occured");
       }
       this.roll = false;
     },
@@ -71,6 +68,11 @@ export default {
     showWinner() {
       this.show.winner = true;
       this.show.button = true;
+    },
+    logError(message) {
+        this.error = true;
+        this.$snackbar.open("An error occured")
+        this.show.button = true;
     }
   }
 };

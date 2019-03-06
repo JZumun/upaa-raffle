@@ -4,7 +4,6 @@
 </template>
 
 <script>
-import { setInterval, clearInterval, setTimeout, clearTimeout } from "timers";
 const generateRandomString = chars => {
   return chars.charAt(Math.floor(Math.random() * chars.length));
 };
@@ -79,7 +78,10 @@ export default {
                 clear(i + 1);
               }
             }, 1500 - (i * 1250) / (num - 1)));
-          clear(0);
+          if (num > 0) {
+            clear(0);
+          }
+          
         }
       },
       immediate: true
