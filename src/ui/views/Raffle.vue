@@ -48,6 +48,7 @@ export default {
       this.error = false;
       this.roll = true;
       this.show.winner = false;
+      await new Promise((done)=>setInterval(done,1000))
       try {
         const { success, result } = (await axios.post("/api/raffle")).data;
         // const { success, result } = await Promise.resolve({ success: true, result: { id: "1234-56789", name: "Barbaros" } })
@@ -59,6 +60,7 @@ export default {
         }
       } catch (err) {
         this.logError("An error occured");
+        this.show.winner = false;
       }
       this.roll = false;
     },
@@ -80,8 +82,9 @@ export default {
 
 <style lang="scss" scoped>
 .rolodex-container {
-  font-size: 5em;
+  font-size: 4em;
   font-family: monospace;
+  line-height: 3;
 }
 .raffle-container {
   text-align: center;
@@ -92,11 +95,15 @@ export default {
   min-height: 100vh;
 }
 .congrats {
-  font-size: 3em;
+  line-height: 0.75;
+  font-size: 5em;
   transition: opacity 0.25s;
 }
 .high {
-  font-size: 2em;
+  font-size: 3em;
+}
+.low {
+  font-weight: bold;
 }
 
 .is-hiding {

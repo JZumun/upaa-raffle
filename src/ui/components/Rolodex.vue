@@ -53,7 +53,6 @@ export default {
     rolling: {
       handler(isRolling) {
         if (isRolling) {
-          clearInterval(this.rollingInterval);
           this.rollingIntervals = this.displayValue.map((v, i) =>
             setInterval(() => {
               this.$set(this.displayValue, i, generateRandomString(this.chars));
@@ -90,6 +89,10 @@ export default {
     forceClear() {
       clearTimeout(this.clearingTimeout);
       this.rollingIntervals.forEach(clearInterval);
+      this.displayValue = [...this.value];
+
+      this.clearingTimeout = undefined;
+      this.rollingIntervals = [];
     }
   }
 };
