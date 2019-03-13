@@ -1,7 +1,16 @@
 <template lang="pug">
-  transition(name="fade")
-    router-view
+  .app
+    transition(name="fade")
+      router-view
+    water-mark
 </template>
+
+<script>
+import WaterMark from "@ui/components/Watermark.vue";
+export default {
+  components: { WaterMark }
+};
+</script>
 
 <style lang="scss">
 body {
@@ -18,5 +27,8 @@ body {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.app {
+  position: relative;
 }
 </style>

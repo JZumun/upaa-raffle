@@ -71,7 +71,7 @@ export default {
     },
     logError(message) {
         this.error = true;
-        this.$snackbar.open("An error occured")
+        this.$snackbar.open(message)
         this.show.button = true;
     }
   }

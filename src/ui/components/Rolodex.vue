@@ -81,7 +81,6 @@ export default {
           if (num > 0) {
             clear(0);
           }
-          
         }
       },
       immediate: true
