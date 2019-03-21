@@ -2,6 +2,7 @@ const sqlite = require("sqlite");
 const sql = require("sql-template-strings");
 const debug = require("debug");
 const path = require("path");
+const { normalize } = require("../utils/student-number");
 
 const log = debug("application:database");
 
@@ -49,7 +50,9 @@ const insert = async entry => {
   const db = await initializeDatabase;
   try {
     await db.run(
-      sql`INSERT INTO person (id, name) VALUES (${entry.id}, ${entry.name})`
+      sql`INSERT INTO person (id, name) VALUES (${normalize(entry.id)}, ${
+        entry.name
+      })`
     );
   } catch (err) {
     log(`Error inserting entry`, entry, err.message);
