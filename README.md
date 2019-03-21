@@ -1,3 +1,5 @@
+![Screenshot of the Raffle Program](src/ui/assets/screenshot.png?raw=true)
+
 # UPAA Raffle
 
 Offline, cross-platform raffle program for use by the University of the Philippines Alumni Association, Camarines Sur Chapter.
